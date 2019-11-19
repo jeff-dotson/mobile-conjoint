@@ -1,4 +1,5 @@
-Optimizing Sort Order
+Swipe Rigth on Mobile: On the Psychological, Statistical, and Pracictal
+Viability of Choice Sets of Size One
 ================
 
 ## Abstract

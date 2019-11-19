@@ -1,5 +1,5 @@
 ---
-title: "Optimizing Sort Order"
+title: "Swipe Rigth on Mobile: On the Psychological, Statistical, and Pracictal Viability of Choice Sets of Size One"
 output: github_document
 ---
 
