@@ -7,29 +7,12 @@ genDesign = function(n.att = NULL, att.vec = NULL, att.label = NULL, n.task = NU
 ##generate a full factorial design:
 
 library(AlgDesign)
-dat <- gen.factorial(att.vec,n.att,center=FALSE,
+dat <- gen.factorial(att.vec,n.att,center=FALSE,factors = "all",
                    varNames=att.label)
 
-desT <- optFederov(~.,dat,nTrials = n.task)
+#desT <- optFederov(~.,dat,nTrials = n.task)
 
 ## create a design by sampling from the full factorial design
-
-indvec = c(1:nrow(dat))
-
-X.des = matrix(double(n.task*n.alt*n.version*(ncol(dat)+3)),ncol=(ncol(dat)+3))
-
-ii = 1
-for(i in 1:n.version){
-  for(j in 1:n.task){
-    ind = sample(indvec,n.alt)
-    xtemp = dat[ind,]
-    xtemp = cbind(c(1:n.alt),xtemp)
-    X.des[c(ii:(ii+(n.alt-1))),1] = i
-    X.des[c(ii:(ii+(n.alt-1))),2] = j
-    X.des[c(ii:(ii+(n.alt-1))),-c(1:2)] = as.matrix(xtemp)
-    ii = ii + n.alt
-  }
-}
 
 X.des = matrix(double(n.task*n.alt*n.version*(ncol(dat)+3)),ncol=(ncol(dat)+3))
 des.tmp = array(0,dim = c(n.task*n.alt,n.att,n.alt))
@@ -60,10 +43,6 @@ for(i in 1:n.version){
 
 colnames(X.des) = c("Version","Task","Concept",colnames(dat))
 
-## Generate experimental design
-
-
-
 ## Create Dummy Coded Design Matrix
 dat.tmp = as.data.frame(X.des)
 
@@ -72,7 +51,7 @@ for(i in 4:ncol(dat.tmp)){
 }
 
 dat.tmp$y = matrix(rnorm(nrow(dat.tmp)),ncol=1)
-out = lm(y~.,dat.tmp,x=TRUE)
+out = lm(y~.,dat.tmp[,-c(1:3)],x=TRUE)
 desmat = out$x[,-1]
 
 # write.csv(desmat,"coded.design.csv")
